@@ -1,0 +1,55 @@
+.sidebar{
+    width:250px;
+    height:100vh;
+    position: fixed;
+    top: 70px;      /* same as topbar height */
+    left: -250px;
+
+    width: 250px;
+    height: calc(100vh - 70px);
+
+    transition: 0.3s ease;
+
+    background-color:var(--navbar-color);
+    border-right:1px solid var(--card-border);
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    padding:20px;
+
+    transition:0.3s ease;
+    z-index:1000;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-menu{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.sidebar-menu li{
+    margin-bottom:20px;
+}
+
+.sidebar-menu a{
+    text-decoration:none;
+    color:var(--text-color);
+    font-weight:500;
+}
+
+.sidebar-bottom{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.sidebar-bottom a{
+    text-decoration:none;
+    color:var(--text-color);
+}

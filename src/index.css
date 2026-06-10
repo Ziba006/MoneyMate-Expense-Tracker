@@ -1,0 +1,56 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.login-btn, .signup-btn{
+  border: 2px solid #3f4041;
+  color: #ececec;
+  font-weight: 600;
+  padding: 8px 22px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.login-btn:hover, .signup-btn:hover{
+   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13,110,253,0.3);
+  
+}
+
+:root{
+  --bg-color: #d5e9fd;
+  --navbar-color: rgba(247, 253, 255, 0.993);
+  --text-color: #1b2e4d;
+  --primary-color: #2563eb;
+  --card-bg: #e0f2fc;
+   --card-border: #cbd5e1;
+}
+
+.dark-mode{
+  --bg-color: #0f172a;
+  --navbar-color: #202b3d;
+  --text-color: #f8fafc;
+  --primary-color: #438afc;
+  --card-bg: rgba(255, 255, 255, 0.08);
+   --card-border: #334155;
+}
+
+body{
+  background-color: var(--bg-color)  !important;
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+.custom-navbar{
+  background-color: var(--navbar-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo{
+  color: var(--text-color);
+}
