@@ -210,6 +210,57 @@ function Transactions({ darkMode, setDarkMode }) {
           saveIncome={saveIncome}
         />
 
+             <div className="transaction-history my-3" >
+
+  <h4>💰 Recent Income</h4>
+
+  {incomes.length === 0 ? (
+
+    <div className="empty-state">
+      <p>No income recorded yet.</p>
+    </div>
+
+  ) : (
+
+    incomes.map((income, index) => (
+
+      <div
+        key={index}
+        className="transaction-item"
+      >
+
+        <div>
+
+          <h5 className="income-description">{income.description}</h5>
+
+          <small>
+            {income.source} • {" "}
+            {new Date(
+              income.date
+            ).toLocaleDateString(
+              "en-IN",
+              {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+              }
+            )}
+          </small>
+
+        </div>
+
+        <h5 className="income-amount">
+          ₹{income.amount}
+        </h5>
+
+      </div>
+
+    ))
+
+  )}
+
+</div>
+
         <div className="transaction-history">
 
           <h4>📝 Recent Transactions</h4>

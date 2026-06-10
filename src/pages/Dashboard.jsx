@@ -9,6 +9,7 @@ function Dashboard({ darkMode, setDarkMode }) {
     const [totalExpenses, setTotalExpenses] = useState(0);
     const [recentTransactions, setRecentTransactions] = useState([]);
     const [budgetUsage, setBudgetUsage] = useState(0);
+    const [totalIncome, setTotalIncome] = useState(0);
 
     useEffect(() => {
 
@@ -59,6 +60,27 @@ function Dashboard({ darkMode, setDarkMode }) {
       }
     }
   }
+
+  const savedIncomes =
+  localStorage.getItem("incomes");
+
+if(savedIncomes){
+
+  const incomes =
+    JSON.parse(savedIncomes);
+
+  const totalIncomeAmount =
+    incomes.reduce(
+      (sum, income) =>
+        sum + Number(income.amount),
+      0
+    );
+
+  setTotalIncome(
+    totalIncomeAmount
+  );
+
+}
 
 }, []);
 
@@ -116,7 +138,7 @@ function Dashboard({ darkMode, setDarkMode }) {
 
           <div className="overview-card">
             <h5>Total Income</h5>
-            <h2>₹0</h2>
+            <h2>₹{totalIncome}</h2>
           </div>
 
           <div className="overview-card">

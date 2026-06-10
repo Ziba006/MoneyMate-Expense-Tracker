@@ -136,3 +136,7 @@
     margin-bottom: 15px;
     font-weight: 600;
 }
+
+.income-amount, .income-description{
+    color:#11e05d;
+}
