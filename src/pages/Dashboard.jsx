@@ -6,23 +6,61 @@ import { useNavigate } from "react-router-dom";
 function Dashboard({ darkMode, setDarkMode }) {
     const [budget, setBudget] = useState(null);
     const navigate = useNavigate();
+    const [totalExpenses, setTotalExpenses] = useState(0);
+    const [recentTransactions, setRecentTransactions] = useState([]);
+    const [budgetUsage, setBudgetUsage] = useState(0);
 
-        useEffect(() => {
+    useEffect(() => {
+
+  const savedExpenses =
+    localStorage.getItem("expenses");
+
+  if (savedExpenses) {
+
+    const expenses =
+      JSON.parse(savedExpenses);
+
+    const total =
+      expenses.reduce(
+        (sum, expense) =>
+          sum + Number(expense.amount),
+        0
+      );
+
+    setTotalExpenses(total);
+
+    setRecentTransactions(
+      expenses.slice(0, 3)
+    );
 
     const savedBudget =
-        localStorage.getItem("budgetData");
+      localStorage.getItem("budgetData");
 
-    if(savedBudget){
+    if (savedBudget) {
 
-        const budgetData =
+      const budgetData =
         JSON.parse(savedBudget);
 
-        setBudget(
-        budgetData.monthlyBudget
-        );
-    }
+      const budget =
+        Number(budgetData.monthlyBudget);
 
-    }, []);
+      setBudget(
+        budgetData.monthlyBudget
+      );
+
+      if (budget > 0) {
+
+        const usage =
+          Math.round(
+            (total / budget) * 100
+          );
+
+        setBudgetUsage(usage);
+      }
+    }
+  }
+
+}, []);
 
   return (
     <DashboardLayout
@@ -41,7 +79,7 @@ function Dashboard({ darkMode, setDarkMode }) {
 
       <div className="action-grid">
 
-        <div className="action-card">
+        <div className="action-card"  onClick={() => navigate("/transactions")}>
           <h4>➕ Add Expense</h4>
         </div>
 
@@ -82,23 +120,71 @@ function Dashboard({ darkMode, setDarkMode }) {
           </div>
 
           <div className="overview-card">
-            <h5>Total Expenses</h5>
-            <h2>₹0</h2>
+          <h5>Total Expenses</h5>
+        <h2>₹{totalExpenses}</h2>
           </div>
 
           <div className="overview-card">
             <h5>Budget Usage</h5>
-            <h2>0%</h2>
+            <h2>{budgetUsage}%</h2>
+            <div className="progress-bar">
+        <div
+            className="progress-fill"
+            style={{
+            width: `${budgetUsage}%`
+            }}
+        ></div>
+</div>
           </div>
 
         </div>
 
       </div>
 
-      <div className="empty-card">
-        <h4>📝 Recent Transactions</h4>
-        <p>No transactions yet.</p>
-      </div>
+    <div className="empty-card">
+
+  <h4>📝 Recent Transactions</h4>
+
+  {
+    recentTransactions.length === 0 ? (
+
+      <p>No transactions yet.</p>
+
+    ) : (
+
+      recentTransactions.map(
+        (transaction, index) => (
+
+          <div
+            key={index}
+            className="dashboard-transaction"
+          >
+
+            <div>
+
+              <h6>
+                {transaction.description}
+              </h6>
+
+              <small>
+                {transaction.category}
+              </small>
+
+            </div>
+
+            <strong>
+              ₹{transaction.amount}
+            </strong>
+
+          </div>
+
+        )
+      )
+
+    )
+  }
+
+</div>
 
      <div className="empty-card">
 
@@ -107,7 +193,7 @@ function Dashboard({ darkMode, setDarkMode }) {
         {budget ? (
             <>
             <h3>₹{budget}</h3>
-            <p>0% Used</p>
+            <p>{budgetUsage}%</p>
             </>
         ) : (
             <p>No budget set yet.</p>

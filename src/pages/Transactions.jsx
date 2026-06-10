@@ -1,13 +1,149 @@
 import DashboardLayout from "../components/DashboardLayout";
+import ExpenseModal from "../components/ExpenseModal";
+import IncomeModal from "../components/IncomeModal";
 import "./Transactions.css";
-const [showExpenseForm, setShowExpenseForm] = useState(false);
+
+import { useState, useEffect } from "react";
 
 function Transactions({ darkMode, setDarkMode }) {
+
+  // Expense States
+  const [showExpenseForm, setShowExpenseForm] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("Food & Dining");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Income States
+  const [showIncomeForm, setShowIncomeForm] = useState(false);
+  const [incomeAmount, setIncomeAmount] = useState("");
+  const [incomeSource, setIncomeSource] =
+    useState("Salary");
+  const [incomeDescription, setIncomeDescription] =
+    useState("");
+  const [incomeDate, setIncomeDate] =
+    useState(
+      new Date().toISOString().split("T")[0]
+    );
+
+  // Data States
+  const [expenses, setExpenses] = useState([]);
+  const [incomes, setIncomes] = useState([]);
+
+  // Load Expenses
+  useEffect(() => {
+
+    const savedExpenses =
+      localStorage.getItem("expenses");
+
+    if (savedExpenses) {
+      setExpenses(
+        JSON.parse(savedExpenses)
+      );
+    }
+
+  }, []);
+
+  // Load Incomes
+  useEffect(() => {
+
+    const savedIncomes =
+      localStorage.getItem("incomes");
+
+    if (savedIncomes) {
+      setIncomes(
+        JSON.parse(savedIncomes)
+      );
+    }
+
+  }, []);
+
+  // Save Expense
+  const saveExpense = () => {
+
+    if (!amount || !description) {
+
+      setErrorMessage(
+        "⚠️ Please enter amount and description."
+      );
+
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 1500);
+
+      return;
+    }
+
+    const newExpense = {
+      amount,
+      category,
+      description,
+      date
+    };
+
+    const updatedExpenses = [
+      newExpense,
+      ...expenses
+    ];
+
+    setExpenses(updatedExpenses);
+
+    localStorage.setItem(
+      "expenses",
+      JSON.stringify(updatedExpenses)
+    );
+
+    setAmount("");
+    setDescription("");
+
+    setShowExpenseForm(false);
+  };
+
+  // Save Income
+  const saveIncome = () => {
+
+    if (!incomeAmount || !incomeDescription)
+      return;
+
+    const newIncome = {
+      amount: incomeAmount,
+      source: incomeSource,
+      description: incomeDescription,
+      date: incomeDate
+    };
+
+    const updatedIncomes = [
+      newIncome,
+      ...incomes
+    ];
+
+    setIncomes(updatedIncomes);
+
+    localStorage.setItem(
+      "incomes",
+      JSON.stringify(updatedIncomes)
+    );
+
+    setIncomeAmount("");
+    setIncomeDescription("");
+    setIncomeSource("Salary");
+
+    setIncomeDate(
+      new Date().toISOString().split("T")[0]
+    );
+
+    setShowIncomeForm(false);
+  };
+
   return (
     <DashboardLayout
       darkMode={darkMode}
       setDarkMode={setDarkMode}
     >
+
       <div className="transactions-container">
 
         <div className="transactions-header">
@@ -19,14 +155,24 @@ function Transactions({ darkMode, setDarkMode }) {
 
         <div className="transaction-actions">
 
-          <div className="transaction-card">
+          <div
+            className="transaction-card"
+            onClick={() =>
+              setShowExpenseForm(true)
+            }
+          >
             <h4>➕ Add Expense</h4>
             <p>
               Record a new expense transaction.
             </p>
           </div>
 
-          <div className="transaction-card">
+          <div
+            className="transaction-card"
+            onClick={() =>
+              setShowIncomeForm(true)
+            }
+          >
             <h4>💰 Add Income</h4>
             <p>
               Record a new income source.
@@ -35,20 +181,93 @@ function Transactions({ darkMode, setDarkMode }) {
 
         </div>
 
+        <ExpenseModal
+          showExpenseForm={showExpenseForm}
+          setShowExpenseForm={setShowExpenseForm}
+          amount={amount}
+          setAmount={setAmount}
+          category={category}
+          setCategory={setCategory}
+          description={description}
+          setDescription={setDescription}
+          date={date}
+          setDate={setDate}
+          errorMessage={errorMessage}
+          saveExpense={saveExpense}
+        />
+
+        <IncomeModal
+          showIncomeForm={showIncomeForm}
+          setShowIncomeForm={setShowIncomeForm}
+          incomeAmount={incomeAmount}
+          setIncomeAmount={setIncomeAmount}
+          incomeSource={incomeSource}
+          setIncomeSource={setIncomeSource}
+          incomeDescription={incomeDescription}
+          setIncomeDescription={setIncomeDescription}
+          incomeDate={incomeDate}
+          setIncomeDate={setIncomeDate}
+          saveIncome={saveIncome}
+        />
+
         <div className="transaction-history">
 
           <h4>📝 Recent Transactions</h4>
 
-          <div className="empty-state">
-            <p>No transactions yet.</p>
-            <span>
-              Start by adding your first expense.
-            </span>
-          </div>
+          {expenses.length === 0 ? (
+
+            <div className="empty-state">
+              <p>No transactions yet.</p>
+              <span>
+                Start by adding your first expense.
+              </span>
+            </div>
+
+          ) : (
+
+            expenses.map((expense, index) => (
+
+              <div
+                key={index}
+                className="transaction-item"
+              >
+
+                <div>
+
+                  <h5>
+                    {expense.description}
+                  </h5>
+
+                  <small>
+                    {expense.category} • {" "}
+                    {new Date(
+                      expense.date
+                    ).toLocaleDateString(
+                      "en-IN",
+                      {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric"
+                      }
+                    )}
+                  </small>
+
+                </div>
+
+                <h5>
+                  ₹{expense.amount}
+                </h5>
+
+              </div>
+
+            ))
+
+          )}
 
         </div>
 
       </div>
+
     </DashboardLayout>
   );
 }

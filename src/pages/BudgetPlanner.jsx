@@ -56,7 +56,7 @@ const saveBudget = () => {
   setSaveMessage("✅ Budget Saved Successfully!");
   setTimeout(() => {
   setSaveMessage("");
-}, 3000);
+}, 1500);
 
 };
 
