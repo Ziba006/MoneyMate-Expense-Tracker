@@ -10,6 +10,7 @@ function Dashboard({ darkMode, setDarkMode }) {
     const [recentTransactions, setRecentTransactions] = useState([]);
     const [budgetUsage, setBudgetUsage] = useState(0);
     const [totalIncome, setTotalIncome] = useState(0);
+    const netSavings = totalIncome - totalExpenses;
 
     useEffect(() => {
 
@@ -102,12 +103,36 @@ if(savedIncomes){
       <div className="action-grid">
 
         <div className="action-card"  onClick={() => navigate("/transactions")}>
-          <h4>➕ Add Expense</h4>
+                {totalExpenses > 0 ? (
+            <>
+            <h4>💸 Total Expenses</h4>
+            <h3>₹{totalExpenses}</h3>
+            <small>📝 View Transactions</small>
+            </>
+        ) : (
+          <>
+            <h4>➕ Add Expense</h4><br></br>
+            <p>Track your spending</p>
+            <small>Start Now →</small>
+            </>
+  )}
         </div>
 
-        <div className="action-card">
-          <h4>💰 Add Income</h4>
-        </div>
+        <div className="action-card"   onClick={() => navigate("/transactions")}>
+                {totalIncome > 0 ? (
+            <>
+            <h4>💰 Total Income</h4>
+            <h3>₹{totalIncome}</h3><br></br>
+            <small>➕ Add More Income</small>
+            </>
+        ) : (
+          <>
+            <h4>💰 Add Income</h4><br></br>
+            <p>Record earnings</p>
+            <small>Add Income →</small>
+            </>
+        )}
+                </div>
 
             <div
         className="action-card" onClick={() => navigate("/budget")}>
@@ -119,15 +144,19 @@ if(savedIncomes){
             <small>✏️ Edit Budget</small>
             </>
         ) : (
+          <>
             <h4>🎯 Set Budget</h4>
+            <p>Plan monthly limits</p>
+            <small>Start Now →</small>
+            </>
         )}
 
 </div>
-
-        <div className="action-card">
-          <h4>📊 Analytics</h4>
+        <div className="action-card"  onClick={() => navigate("/analytics")}>       
+        <h4>💵 Net Savings</h4>
+        <h3>₹{netSavings}</h3>
+        <small>📊 View Analytics →</small>
         </div>
-
       </div>
 
       <div className="overview-section">

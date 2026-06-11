@@ -45,8 +45,10 @@
 .action-card{
     background:var(--card-bg);
     border:1px solid var(--card-border);
+    min-height: 180px;
+    padding: 30px;
     border-radius:20px;
-    padding:25px;
+    
     cursor:pointer;
     transition:0.3s;
 }
