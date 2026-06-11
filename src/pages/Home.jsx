@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import './home.css';
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Home({ darkMode, setDarkMode }) {
   const steps = [
@@ -74,9 +75,10 @@ useEffect(() => {
             Your personal companion for smarter money management.
           </p>
 
+       <Link to="/signup">
           <button className="btn signup-btn hero-btn px-4 py-2 my-3">
-            Start Your Free Journey➡️
-          </button>
+            Start Your Free Journey ➡️
+          </button></Link>
 
         </div>
         <div className="feature-grid">

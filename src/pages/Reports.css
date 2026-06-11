@@ -1,0 +1,81 @@
+.reports-container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.reports-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.report-card{
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+.report-select{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid var(--card-border);
+    background:var(--bg-color);
+    color:var(--text-color);
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.summary-item{
+    background:rgba(255,255,255,0.05);
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+@media(max-width:768px){
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+.statement-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:15px 0;
+
+    border-bottom:1px solid var(--card-border);
+}
+
+.income-amount{
+    color:#22c55e;
+}
+
+.expense-amount{
+    color:#ef4444;
+}
+
+.report-filter{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-top:15px;
+}
+
+.report-select{
+    width:220px;
+    padding:16px;
+    font-size:18px;
+    border-radius:12px;
+    text-align: center;
+}

@@ -7,9 +7,8 @@ function Navbar({ darkMode, setDarkMode }) {
 };
 
   return (
-    <nav className="navbar custom-navbar shadow-sm py-3">
-      <div className="container d-flex justify-content-between align-items-center gap-2">
-
+    <nav className="navbar custom-navbar py-3">
+   <div className="container-fluid d-flex justify-content-between align-items-center">
           <h2 className="m-0 fw-bold logo">
             Money💸Mate
           </h2>
@@ -30,7 +29,7 @@ function Navbar({ darkMode, setDarkMode }) {
           </button>
           </Link>
           
-          <button className="btn btn-link text-dark fs-4 border-0" onClick={toggleTheme}>
+          <button className="theme-btn" onClick={toggleTheme}>
              {darkMode ? "☀️" : "🌙"}
           </button>
         </div>
