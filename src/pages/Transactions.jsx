@@ -36,22 +36,38 @@ function Transactions({ darkMode, setDarkMode }) {
   // Load Expenses
   useEffect(() => {
 
-    const savedExpenses =
-      localStorage.getItem("expenses");
+  const currentUser =
+  localStorage.getItem(
+    "currentUser"
+  );
 
-    if (savedExpenses) {
-      setExpenses(
-        JSON.parse(savedExpenses)
-      );
-    }
+const savedExpenses =
+  localStorage.getItem(
+    `${currentUser}_expenses`
+  );
+
+if (savedExpenses) {
+
+  setExpenses(
+    JSON.parse(savedExpenses)
+  );
+
+}
+
 
   }, []);
 
   // Load Incomes
   useEffect(() => {
 
+    
+  const currentUser =
+  localStorage.getItem(
+    "currentUser"
+  );
+
     const savedIncomes =
-      localStorage.getItem("incomes");
+      localStorage.getItem(`${currentUser}_incomes`);
 
     if (savedIncomes) {
       setIncomes(
@@ -91,8 +107,13 @@ function Transactions({ darkMode, setDarkMode }) {
 
     setExpenses(updatedExpenses);
 
+        const currentUser =
+      localStorage.getItem(
+        "currentUser"
+      );
+
     localStorage.setItem(
-      "expenses",
+      `${currentUser}_expenses`,
       JSON.stringify(updatedExpenses)
     );
 
@@ -120,10 +141,15 @@ function Transactions({ darkMode, setDarkMode }) {
       ...incomes
     ];
 
-    setIncomes(updatedIncomes);
+        setIncomes(updatedIncomes);
 
+        const currentUser =
+  localStorage.getItem(
+    "currentUser"
+  );
+  
     localStorage.setItem(
-      "incomes",
+      `${currentUser}_incomes`,
       JSON.stringify(updatedIncomes)
     );
 

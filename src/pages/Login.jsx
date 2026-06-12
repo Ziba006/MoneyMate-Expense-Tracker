@@ -1,7 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./Login.css";
 
 function Login() {
+  const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const navigate = useNavigate();
+
+const loginUser = () => {
+
+  const users =
+    JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
+
+  const user = users.find(
+    (user) =>
+      user.email === email &&
+      user.password === password
+  );
+
+  if (!user) {
+
+    alert(
+      "Invalid email or password"
+    );
+
+    return;
+  }
+
+  localStorage.setItem(
+    "currentUser",
+    user.email
+  );
+
+  navigate("/dashboard");
+};
+
   return (
     <div className="login-container">
 
@@ -22,6 +57,7 @@ function Login() {
               type="email"
               className="form-control"
               placeholder="Enter your email"
+               value={email} onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -31,17 +67,17 @@ function Login() {
               type="password"
               className="form-control"
               placeholder="Enter your password"
+              value={password} onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          <Link to="/dashboard">
             <button
-              type="button"
-              className="btn signup-btn w-100"
-            >
-              Login
-            </button>
-          </Link>
+            type="button"
+            className="btn signup-btn w-100"
+            onClick={loginUser}
+          >
+            Login
+          </button>
 
         </form>
 

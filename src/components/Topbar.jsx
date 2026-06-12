@@ -1,4 +1,5 @@
 import "./Topbar.css";
+import { useNavigate } from "react-router-dom";
 
 function Topbar({
   isOpen,
@@ -6,6 +7,8 @@ function Topbar({
   darkMode,
   setDarkMode
 }) {
+
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
@@ -17,8 +20,10 @@ function Topbar({
       <div className="d-flex align-items-center gap-3">
 
         <button
-          className="hamburger-btn "
-          onClick={() => setIsOpen(!isOpen)}
+          className="hamburger-btn"
+          onClick={() =>
+            setIsOpen(!isOpen)
+          }
         >
           ☰
         </button>
@@ -38,7 +43,12 @@ function Topbar({
           {darkMode ? "☀️" : "🌙"}
         </button>
 
-        <button className="profile-btn">
+        <button
+          className="profile-btn"
+          onClick={() =>
+            navigate("/profile")
+          }
+        >
           👤
         </button>
 

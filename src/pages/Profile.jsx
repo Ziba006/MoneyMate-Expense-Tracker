@@ -3,58 +3,99 @@ import "./Profile.css";
 import { useState, useEffect } from "react";
 
 function Profile({ darkMode, setDarkMode }) {
+
   const [totalTransactions, setTotalTransactions] =
-  useState(0);
+    useState(0);
 
-const [incomeCount, setIncomeCount] =
-  useState(0);
+  const [incomeCount, setIncomeCount] =
+    useState(0);
 
-const [expenseCount, setExpenseCount] =
-  useState(0);
+  const [expenseCount, setExpenseCount] =
+    useState(0);
 
-const [currentBudget, setCurrentBudget] =
-  useState(0);
+  const [currentBudget, setCurrentBudget] =
+    useState(0);
+
+  const [name, setName] =
+    useState("");
+
+  const [email, setEmail] =
+    useState("");
 
   useEffect(() => {
 
-  const expenses =
-    JSON.parse(
-      localStorage.getItem("expenses")
-    ) || [];
+    const currentUser =
+      localStorage.getItem(
+        "currentUser"
+      );
 
-  const incomes =
-    JSON.parse(
-      localStorage.getItem("incomes")
-    ) || [];
+    const expenses =
+      JSON.parse(
+        localStorage.getItem(
+          `${currentUser}_expenses`
+        )
+      ) || [];
 
-  const budgetData =
-    JSON.parse(
-      localStorage.getItem("budgetData")
+    const incomes =
+      JSON.parse(
+        localStorage.getItem(
+          `${currentUser}_incomes`
+        )
+      ) || [];
+
+    const budgetData =
+      JSON.parse(
+        localStorage.getItem(
+          `${currentUser}_budget`
+        )
+      );
+
+    const users =
+      JSON.parse(
+        localStorage.getItem("users")
+      ) || [];
+
+    const currentUserData =
+      users.find(
+        (user) =>
+          user.email === currentUser
+      );
+
+    if (currentUserData) {
+
+      setName(
+        currentUserData.name
+      );
+
+      setEmail(
+        currentUserData.email
+      );
+
+    }
+
+    setExpenseCount(
+      expenses.length
     );
 
-  setExpenseCount(
-    expenses.length
-  );
-
-  setIncomeCount(
-    incomes.length
-  );
-
-  setTotalTransactions(
-    expenses.length +
-    incomes.length
-  );
-
-  if(budgetData){
-
-    setCurrentBudget(
-      budgetData.monthlyBudget
+    setIncomeCount(
+      incomes.length
     );
 
-  }
+    setTotalTransactions(
+      expenses.length +
+      incomes.length
+    );
 
-}, []);
-  
+    if (budgetData) {
+
+      setCurrentBudget(
+        budgetData.monthlyBudget
+      );
+
+    }
+
+  }, []);
+
   return (
     <DashboardLayout
       darkMode={darkMode}
@@ -66,12 +107,18 @@ const [currentBudget, setCurrentBudget] =
         <div className="profile-header">
 
           <div className="profile-avatar">
-            👤
+            {
+              name
+                ? name
+                    .charAt(0)
+                    .toUpperCase()
+                : "👤"
+            }
           </div>
 
-          <h2>MoneyMate User</h2>
+          <h2>{name}</h2>
 
-          <p>user@example.com</p>
+          <p>{email}</p>
 
         </div>
 
@@ -79,16 +126,18 @@ const [currentBudget, setCurrentBudget] =
 
         <div className="profile-card">
 
-          <h3>📋 Personal Information</h3>
+          <h3>
+            📋 Personal Information
+          </h3>
 
           <div className="info-row">
             <span>Name</span>
-            <strong>MoneyMate User</strong>
+            <strong>{name}</strong>
           </div>
 
           <div className="info-row">
             <span>Email</span>
-            <strong>user@example.com</strong>
+            <strong>{email}</strong>
           </div>
 
           <div className="info-row">
@@ -107,28 +156,46 @@ const [currentBudget, setCurrentBudget] =
 
         <div className="profile-card">
 
-          <h3>📊 Account Statistics</h3>
+          <h3>
+            📊 Account Statistics
+          </h3>
 
           <div className="stats-grid">
 
             <div className="stat-item">
-              <h4>Total Transactions</h4>
-              <p>{totalTransactions}</p>
+              <h4>
+                Total Transactions
+              </h4>
+              <p>
+                {totalTransactions}
+              </p>
             </div>
 
             <div className="stat-item">
-              <h4>Income Records</h4>
-              <p>{incomeCount}</p>
+              <h4>
+                Income Records
+              </h4>
+              <p>
+                {incomeCount}
+              </p>
             </div>
 
             <div className="stat-item">
-              <h4>Expense Records</h4>
-              <p>{expenseCount}</p>
+              <h4>
+                Expense Records
+              </h4>
+              <p>
+                {expenseCount}
+              </p>
             </div>
 
             <div className="stat-item">
-              <h4>Current Budget</h4>
-              <p>₹{currentBudget}</p>
+              <h4>
+                Current Budget
+              </h4>
+              <p>
+                ₹{currentBudget}
+              </p>
             </div>
 
           </div>
@@ -139,7 +206,9 @@ const [currentBudget, setCurrentBudget] =
 
         <div className="profile-card">
 
-          <h3>🔒 Account</h3>
+          <h3>
+            🔒 Account
+          </h3>
 
           <button className="profile-btn">
             Change Password
@@ -155,7 +224,9 @@ const [currentBudget, setCurrentBudget] =
 
         <div className="profile-card">
 
-          <h3>ℹ️ About</h3>
+          <h3>
+            ℹ️ About
+          </h3>
 
           <p>
             MoneyMate v1.0

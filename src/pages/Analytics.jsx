@@ -23,9 +23,16 @@ function Analytics({ darkMode, setDarkMode }) {
 
   // Expenses
 
-  const savedExpenses =
-    localStorage.getItem("expenses");
+  const currentUser =
+  localStorage.getItem(
+    "currentUser"
+  );
 
+const savedExpenses =
+  localStorage.getItem(
+    `${currentUser}_expenses`
+  );
+ 
   let expenseTotal = 0;
 
   if(savedExpenses){
@@ -84,7 +91,7 @@ if (chartData.length > 0) {
   // Income
 
   const savedIncomes =
-    localStorage.getItem("incomes");
+    localStorage.getItem(`${currentUser}_incomes`);
 
   let incomeTotal = 0;
 
@@ -112,7 +119,7 @@ if (chartData.length > 0) {
   // Budget
 
   const savedBudget =
-    localStorage.getItem("budgetData");
+    localStorage.getItem(`${currentUser}_budget`);
 
   if(savedBudget){
 

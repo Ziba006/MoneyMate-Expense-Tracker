@@ -18,15 +18,20 @@ setTopExpenseCategory] =
   useState("N/A");
 
 useEffect(() => {
+  
+  const currentUser =
+  localStorage.getItem(
+    "currentUser"
+  );
 
   const expenses =
     JSON.parse(
-      localStorage.getItem("expenses")
+      localStorage.getItem(`${currentUser}_expenses`)
     ) || [];
 
   const incomes =
     JSON.parse(
-      localStorage.getItem("incomes")
+      localStorage.getItem(`${currentUser}_incomes`)
     ) || [];
 
   const formattedExpenses =

@@ -14,8 +14,16 @@ function Dashboard({ darkMode, setDarkMode }) {
 
     useEffect(() => {
 
-  const savedExpenses =
-    localStorage.getItem("expenses");
+      const currentUser =
+  localStorage.getItem(
+    "currentUser"
+  );
+
+const savedExpenses =
+  localStorage.getItem(
+    `${currentUser}_expenses`
+  );
+  
 
   if (savedExpenses) {
 
@@ -36,7 +44,7 @@ function Dashboard({ darkMode, setDarkMode }) {
     );
 
     const savedBudget =
-      localStorage.getItem("budgetData");
+      localStorage.getItem(`${currentUser}_budget`);
 
     if (savedBudget) {
 
@@ -63,7 +71,7 @@ function Dashboard({ darkMode, setDarkMode }) {
   }
 
   const savedIncomes =
-  localStorage.getItem("incomes");
+  localStorage.getItem(`${currentUser}_incomes`);
 
 if(savedIncomes){
 
