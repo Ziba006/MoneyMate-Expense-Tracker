@@ -1,4 +1,4 @@
-import DashboardLayout from "../components/Dashboardlayout";
+import DashboardLayout from "../components/DashboardLayout";
 import { useState, useEffect } from "react";
 import "./BudgetPlanner.css";
 
