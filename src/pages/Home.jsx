@@ -222,6 +222,20 @@ useEffect(() => {
 
     <hr />
 
+<p>
+    <strong>Project Topic: </strong>
+    Personal Expense Tracker
+  </p>
+
+  <p>
+    <strong>Developed By: </strong>
+    Ziba Khan
+  </p>
+
+  <p>
+    <strong>Registered Email: </strong>
+   zibak2006@gmail.com
+  </p>
     <small>
       © 2026 MoneyMate. All Rights Reserved.
     </small>
