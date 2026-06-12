@@ -6,6 +6,7 @@ function Login() {
   const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const navigate = useNavigate();
+const [error, setError] = useState("");
 
 const loginUser = () => {
 
@@ -22,9 +23,14 @@ const loginUser = () => {
 
   if (!user) {
 
-    alert(
+    setError(
       "Invalid email or password"
     );
+
+
+setTimeout(() => {
+  setError("");
+}, 1500);
 
     return;
   }
@@ -39,10 +45,10 @@ const loginUser = () => {
 
   return (
     <div className="login-container">
-
+{/* 
       <Link to="/" className="back-link">
         ← Back to Home
-      </Link>
+      </Link> */}
 
       <div className="login-card">
 
@@ -71,6 +77,14 @@ const loginUser = () => {
             />
           </div>
 
+          {
+            error && (
+              <div className="login-error">
+                {error}
+              </div>
+            )
+          }
+
             <button
             type="button"
             className="btn signup-btn w-100"
@@ -88,6 +102,10 @@ const loginUser = () => {
           </Link>
         </p>
 
+
+      <Link to="/" className="back-link">
+        ← Back to Home
+      </Link>
       </div>
 
     </div>

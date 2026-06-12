@@ -8,7 +8,8 @@ const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [confirmPassword, setConfirmPassword] =useState("");
 const navigate = useNavigate();
-
+const [error, setError] =useState("");
+ 
 const createAccount = () => {
 
   if (
@@ -17,14 +18,20 @@ const createAccount = () => {
     !password ||
     !confirmPassword
   ) {
-    alert("Please fill all fields");
+    setError("Please fill all fields");
+      setTimeout(() => {
+    setError("");
+  }, 1500);
     return;
   }
 
   if (
     password !== confirmPassword
   ) {
-    alert("Passwords do not match");
+    setError("Passwords do not match");
+        setTimeout(() => {
+      setError("");
+    }, 1500);
     return;
   }
 
@@ -40,7 +47,7 @@ const createAccount = () => {
     );
 
   if (existingUser) {
-    alert(
+    setError(
       "Email already registered"
     );
     return;
@@ -70,13 +77,9 @@ const createAccount = () => {
   return (
     <div className="signup-container">
 
-      <Link to="/" className="back-link">
-        ← Back to Home
-      </Link>
-
       <div className="signup-card">
 
-        <h2>MoneyMate 💸</h2>
+        <h2>Money💸Mate</h2>
         <h3>Create Account</h3>
 
         <form>
@@ -121,6 +124,14 @@ const createAccount = () => {
             />
           </div>
 
+        {
+          error && (
+            <div className="signup-error">
+              {error}
+            </div>
+          )
+        }
+
             <button
         type="button"
         className="btn signup-btn w-100"
@@ -136,6 +147,11 @@ const createAccount = () => {
             Login
           </Link>
         </p>
+
+
+      <Link to="/" className="back-link">
+        ← Back to Home
+      </Link>
 
       </div>
 
