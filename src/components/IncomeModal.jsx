@@ -9,7 +9,9 @@ function IncomeModal({
   setIncomeDescription,
   incomeDate,
   setIncomeDate,
-  saveIncome
+  saveIncome,
+  editIncomeIndex
+
 }) {
 
   if (!showIncomeForm) return null;
@@ -88,7 +90,11 @@ function IncomeModal({
             className="save-expense-btn"
             onClick={saveIncome}
           >
-            Save Income
+                {
+        editIncomeIndex !== null
+          ? "Save Changes"
+          : "Save Income"
+      }
           </button>
 
         </div>

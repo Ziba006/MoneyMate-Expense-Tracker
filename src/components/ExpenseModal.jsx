@@ -10,7 +10,8 @@ function ExpenseModal({
   date,
   setDate,
   errorMessage,
-  saveExpense
+  saveExpense,
+  editIndex
 }) {
 
   if (!showExpenseForm) return null;
@@ -87,12 +88,16 @@ function ExpenseModal({
             Cancel
           </button>
 
-          <button
-            className="save-expense-btn"
-            onClick={saveExpense}
-          >
-            Save Expense
-          </button>
+         <button
+  className="save-expense-btn"
+  onClick={saveExpense}
+>
+  {
+    editIndex !== null
+      ? "Save Changes"
+      : "Save Expense"
+  }
+</button>
 
         </div>
 

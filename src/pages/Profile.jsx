@@ -22,6 +22,18 @@ function Profile({ darkMode, setDarkMode }) {
   const [email, setEmail] =
     useState("");
 
+    const [showEditProfile,
+setShowEditProfile] =
+  useState(false);
+
+const [editName,
+setEditName] =
+  useState("");
+
+const [editEmail,
+setEditEmail] =
+  useState("");
+
   useEffect(() => {
 
     const currentUser =
@@ -73,6 +85,14 @@ function Profile({ darkMode, setDarkMode }) {
 
     }
 
+    setEditName(
+  currentUserData.name
+);
+
+setEditEmail(
+  currentUserData.email
+);
+
     setExpenseCount(
       expenses.length
     );
@@ -95,6 +115,48 @@ function Profile({ darkMode, setDarkMode }) {
     }
 
   }, []);
+
+  const saveProfile = () => {
+
+  const users =
+    JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
+
+  const currentUser =
+    localStorage.getItem(
+      "currentUser"
+    );
+
+  const updatedUsers =
+    users.map((user) =>
+
+      user.email === currentUser
+
+        ? {
+            ...user,
+            name: editName,
+            email: editEmail
+          }
+
+        : user
+    );
+
+  localStorage.setItem(
+    "users",
+    JSON.stringify(updatedUsers)
+  );
+
+  localStorage.setItem(
+    "currentUser",
+    editEmail
+  );
+
+  setName(editName);
+  setEmail(editEmail);
+
+  setShowEditProfile(false);
+};
 
   return (
     <DashboardLayout
@@ -140,10 +202,6 @@ function Profile({ darkMode, setDarkMode }) {
             <strong>{email}</strong>
           </div>
 
-          <div className="info-row">
-            <span>Phone</span>
-            <strong>Not Added</strong>
-          </div>
 
           <div className="info-row">
             <span>Location</span>
@@ -214,9 +272,14 @@ function Profile({ darkMode, setDarkMode }) {
             Change Password
           </button>
 
-          <button className="profile-btn">
-            Edit Profile
-          </button>
+            <button
+      className="profile-btn"
+      onClick={() =>
+        setShowEditProfile(true)
+      }
+    >
+      Edit Profile
+    </button>
 
         </div>
 
@@ -243,6 +306,76 @@ function Profile({ darkMode, setDarkMode }) {
         </div>
 
       </div>
+
+{
+  showEditProfile && (
+
+    <div
+      className="modal-overlay"
+      onClick={() =>
+        setShowEditProfile(false)
+      }
+    >
+
+      <div
+        className="expense-modal"
+        onClick={(e) =>
+          e.stopPropagation()
+        }
+      >
+
+        <h3>
+          👤 Edit Profile
+        </h3>
+
+        <input
+          type="text"
+          className="expense-input"
+          value={editName}
+          onChange={(e) =>
+            setEditName(
+              e.target.value
+            )
+          }
+        />
+
+        <input
+          type="email"
+          className="expense-input"
+          value={editEmail}
+          onChange={(e) =>
+            setEditEmail(
+              e.target.value
+            )
+          }
+        />
+
+        <div className="modal-actions">
+
+          <button
+            className="clear-budget-btn"
+            onClick={() =>
+              setShowEditProfile(false)
+            }
+          >
+            Cancel
+          </button>
+
+          <button
+            className="save-expense-btn"
+            onClick={saveProfile}
+          >
+            Save Changes
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  )
+}
 
     </DashboardLayout>
   );

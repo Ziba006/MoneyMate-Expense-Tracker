@@ -33,6 +33,9 @@ function Transactions({ darkMode, setDarkMode }) {
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
 
+  const [editIndex, setEditIndex] = useState(null);
+  const [editIncomeIndex,setEditIncomeIndex] = useState(null);
+
   // Load Expenses
   useEffect(() => {
 
@@ -53,7 +56,6 @@ if (savedExpenses) {
   );
 
 }
-
 
   }, []);
 
@@ -100,6 +102,39 @@ if (savedExpenses) {
       date
     };
 
+    if(editIndex !== null){
+
+  const updatedExpenses =
+    [...expenses];
+
+  updatedExpenses[
+    editIndex
+  ] = newExpense;
+
+  setExpenses(
+    updatedExpenses
+  );
+
+  const currentUser =
+    localStorage.getItem(
+      "currentUser"
+    );
+
+  localStorage.setItem(
+    `${currentUser}_expenses`,
+    JSON.stringify(
+      updatedExpenses
+    )
+  );
+
+  setEditIndex(null);
+
+  setShowExpenseForm(false);
+
+  return;
+}
+setEditIndex(null);
+
     const updatedExpenses = [
       newExpense,
       ...expenses
@@ -136,6 +171,40 @@ if (savedExpenses) {
       date: incomeDate
     };
 
+    if(editIncomeIndex !== null){
+
+  const updatedIncomes =
+    [...incomes];
+
+  updatedIncomes[
+    editIncomeIndex
+  ] = newIncome;
+
+  setIncomes(
+    updatedIncomes
+  );
+
+  const currentUser =
+    localStorage.getItem(
+      "currentUser"
+    );
+
+  localStorage.setItem(
+    `${currentUser}_incomes`,
+    JSON.stringify(
+      updatedIncomes
+    )
+  );
+
+  setEditIncomeIndex(
+    null
+  );
+
+  setShowIncomeForm(false);
+
+  return;
+}
+
     const updatedIncomes = [
       newIncome,
       ...incomes
@@ -163,6 +232,108 @@ if (savedExpenses) {
 
     setShowIncomeForm(false);
   };
+
+  const deleteExpense = (index) => {
+
+  const currentUser =
+    localStorage.getItem(
+      "currentUser"
+    );
+
+  const updatedExpenses =
+    expenses.filter(
+      (_, i) => i !== index
+    );
+
+  setExpenses(
+    updatedExpenses
+  );
+
+  localStorage.setItem(
+    `${currentUser}_expenses`,
+    JSON.stringify(updatedExpenses)
+  );
+
+};
+
+const deleteIncome = (index) => {
+
+  const currentUser =
+    localStorage.getItem(
+      "currentUser"
+    );
+
+  const updatedIncomes =
+    incomes.filter(
+      (_, i) => i !== index
+    );
+
+  setIncomes(
+    updatedIncomes
+  );
+
+  localStorage.setItem(
+    `${currentUser}_incomes`,
+    JSON.stringify(updatedIncomes)
+  );
+
+};
+
+const editExpense = (index) => {
+
+  const expense =
+    expenses[index];
+
+  setAmount(
+    expense.amount
+  );
+
+  setCategory(
+    expense.category
+  );
+
+  setDescription(
+    expense.description
+  );
+
+  setDate(
+    expense.date
+  );
+
+  setEditIndex(index);
+
+  setShowExpenseForm(true);
+
+};
+
+const editIncome = (index) => {
+
+  const income =
+    incomes[index];
+
+  setIncomeAmount(
+    income.amount
+  );
+
+  setIncomeSource(
+    income.source
+  );
+
+  setIncomeDescription(
+    income.description
+  );
+
+  setIncomeDate(
+    income.date
+  );
+
+  setEditIncomeIndex(
+    index
+  );
+
+  setShowIncomeForm(true);
+
+};
 
   return (
     <DashboardLayout
@@ -220,6 +391,7 @@ if (savedExpenses) {
           setDate={setDate}
           errorMessage={errorMessage}
           saveExpense={saveExpense}
+           editIndex={editIndex}
         />
 
         <IncomeModal
@@ -234,6 +406,7 @@ if (savedExpenses) {
           incomeDate={incomeDate}
           setIncomeDate={setIncomeDate}
           saveIncome={saveIncome}
+           editIncomeIndex={ editIncomeIndex}
         />
 
              <div className="transaction-history my-3" >
@@ -275,9 +448,31 @@ if (savedExpenses) {
 
         </div>
 
-        <h5 className="income-amount">
-          ₹{income.amount}
-        </h5>
+     <div>
+
+  <h5 className="income-amount">
+    ₹{income.amount}
+  </h5>
+
+<button
+    className="edit-btn"
+    onClick={() =>
+      editIncome(index)
+    }
+  >
+    ✏️
+  </button>
+
+  <button
+    className="delete-btn"
+    onClick={() =>
+      deleteIncome(index)
+    }
+  >
+    🗑
+  </button>
+
+</div>
 
       </div>
 
@@ -330,10 +525,17 @@ if (savedExpenses) {
                   </small>
 
                 </div>
+          <div>
 
-                <h5>
-                  ₹{expense.amount}
-                </h5>
+            <h5>₹{expense.amount}</h5>
+        <button className="edit-btn" onClick={() => editExpense(index)}>
+          ✏️
+        </button>
+
+            <button className="delete-btn" onClick={() => deleteExpense(index)}>
+              🗑
+            </button>
+      </div>
 
               </div>
 

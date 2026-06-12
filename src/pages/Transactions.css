@@ -140,3 +140,21 @@
 .income-amount, .income-description{
     color:#11e05d;
 }
+
+.delete-btn{
+  border:none;
+  background:none;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+.delete-btn:hover{
+  transform:scale(1.1);
+}
+
+.edit-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+  margin-right:8px;
+}
