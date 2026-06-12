@@ -1,4 +1,4 @@
-import DashboardLayout from "../components/DashboardLayout";
+import DashboardLayout from "../components/Dashboardlayout";
 import "./Dashboard.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
