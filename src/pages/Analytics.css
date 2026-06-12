@@ -61,3 +61,13 @@
 .chart-container{
     height:300px;
 }
+
+.empty-state{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:250px;
+  color:#64748b;
+  font-size:1rem;
+  text-align:center;
+}

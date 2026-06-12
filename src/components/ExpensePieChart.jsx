@@ -25,48 +25,63 @@ function ExpensePieChart({
 
       <h3>🥧 Expense Breakdown</h3>
 
-      <div className="chart-container">
+<div className="chart-container">
 
-        <ResponsiveContainer
-          width="100%"
-          height={300}
-        >
+  {
+    categoryData.length === 0 ? (
 
-          <PieChart>
-
-            <Pie
-              data={categoryData}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={100}
-              label
-            >
-
-              {
-                categoryData.map(
-                  (entry, index) => (
-
-                    <Cell
-                      key={index}
-                       fill={
-              CATEGORY_COLORS[entry.name] ||"#686565"} />
-                  )
-                )
-              }
-
-            </Pie>
-
-            <Tooltip />
-
-          </PieChart>
-
-        </ResponsiveContainer>
-
+      <div className="empty-state">
+        <h2>📊</h2>
+    <p>No expense data available yet.</p>
       </div>
 
-    </div>
+    ) : (
 
-  );
+      <ResponsiveContainer
+        width="100%"
+        height={300}
+      >
+
+        <PieChart>
+
+          <Pie
+            data={categoryData}
+            dataKey="value"
+            nameKey="name"
+            outerRadius={100}
+            label
+          >
+
+            {
+              categoryData.map(
+                (entry, index) => (
+
+                  <Cell
+                    key={index}
+                    fill={
+                      CATEGORY_COLORS[
+                        entry.name
+                      ] || "#686565"
+                    }
+                  />
+
+                )
+              )
+            }
+
+          </Pie>
+
+          <Tooltip />
+
+        </PieChart>
+
+      </ResponsiveContainer>
+
+    )
+  }
+
+</div>
+ </div>
+  )
 }
-
 export default ExpensePieChart;

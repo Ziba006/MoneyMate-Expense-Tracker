@@ -31,6 +31,16 @@ function IncomeExpenseBarChart({
 
       <div className="chart-container">
 
+{
+  totalIncome === 0 &&
+  totalExpenses === 0 ? (
+
+    <div className="empty-state">
+       <h2>💰</h2>
+    <p>Add income or expenses to see analytics.</p>
+    </div>
+
+  ) : (
         <ResponsiveContainer
           width="100%"
           height={300}
@@ -54,6 +64,8 @@ function IncomeExpenseBarChart({
           </BarChart>
 
         </ResponsiveContainer>
+  )
+}
 
       </div>
 
