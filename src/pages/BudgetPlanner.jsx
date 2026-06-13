@@ -10,7 +10,7 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
   const [entertainment, setEntertainment] = useState("");
   const [education, setEducation] = useState("");
   const [shopping, setShopping] = useState("");
-   const [heathcare, setHealthcare] = useState("");
+   const [healthcare, setHealthcare] = useState("");
 
   const [saveMessage, setSaveMessage] = useState("");
 
@@ -19,7 +19,7 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
     Number(transport) +
     Number(entertainment) +
     Number(education) +
-    Number(heathcare) +
+    Number(healthcare) +
     Number(shopping);
 
   const remaining =
@@ -59,7 +59,7 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
       entertainment,
       education,
       shopping,
-      heathcare
+      healthcare
     };
 
     const currentUser =
@@ -124,7 +124,7 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
       );
 
       setHealthcare(
-        budgetData.heathcare || ""
+        budgetData.healthcare || ""
       );
 
     }
