@@ -10,6 +10,8 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
   const [entertainment, setEntertainment] = useState("");
   const [education, setEducation] = useState("");
   const [shopping, setShopping] = useState("");
+   const [heathcare, setHealthcare] = useState("");
+
   const [saveMessage, setSaveMessage] = useState("");
 
   const allocated =
@@ -17,6 +19,7 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
     Number(transport) +
     Number(entertainment) +
     Number(education) +
+    Number(heathcare) +
     Number(shopping);
 
   const remaining =
@@ -34,6 +37,7 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
     setEntertainment("");
     setEducation("");
     setShopping("");
+    setHealthcare("");
 
     const currentUser =
       localStorage.getItem(
@@ -54,7 +58,8 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
       transport,
       entertainment,
       education,
-      shopping
+      shopping,
+      heathcare
     };
 
     const currentUser =
@@ -116,6 +121,10 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
 
       setShopping(
         budgetData.shopping || ""
+      );
+
+      setHealthcare(
+        budgetData.heathcare || ""
       );
 
     }
@@ -214,6 +223,18 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
             value={shopping}
             onChange={(e) =>
               setShopping(
+                e.target.value
+              )
+            }
+          />
+
+            <input
+            type="number"
+            placeholder="Healthcare"
+            className="budget-input"
+            value={heathcare}
+            onChange={(e) =>
+              setHealthcare(
                 e.target.value
               )
             }

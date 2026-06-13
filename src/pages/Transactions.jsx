@@ -16,6 +16,7 @@ function Transactions({ darkMode, setDarkMode }) {
     new Date().toISOString().split("T")[0]
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedCategory,setSelectedCategory] = useState("All");
 
   // Income States
   const [showIncomeForm, setShowIncomeForm] = useState(false);
@@ -335,6 +336,17 @@ const editIncome = (index) => {
 
 };
 
+const filteredExpenses =
+  selectedCategory === "All"
+
+    ? expenses
+
+    : expenses.filter(
+        (expense) =>
+          expense.category ===
+          selectedCategory
+      );
+
   return (
     <DashboardLayout
       darkMode={darkMode}
@@ -486,18 +498,41 @@ const editIncome = (index) => {
 
           <h4>📝 Recent Transactions</h4>
 
-          {expenses.length === 0 ? (
+<select
+  className="category-filter"
+  value={selectedCategory}
+  onChange={(e) =>
+    setSelectedCategory(
+      e.target.value
+    )
+  }
+>
+  <option value="All">All Categories</option>
+  <option value="Food & Dining">Food & Dining</option>
+  <option value="Transportation">Transportation</option>
+  <option value="Shopping">Shopping</option>
+  <option value="Entertainment">Entertainment</option>
+  <option value="Bills & Utilities">Bills & Utilities</option>
+  <option value="Healthcare">Healthcare</option>
+  <option value="Education">Education</option>
+  <option value="Housing">Housing</option>
+  <option value="Travel">Travel</option>
+  <option value="Mobile & Internet">Mobile & Internet</option>
+  <option value="Work">Work</option>
+  <option value="Others">Others</option>
+</select>
+
+          {filteredExpenses.length === 0 ? (
 
             <div className="empty-state">
-              <p>No transactions yet.</p>
-              <span>
-                Start by adding your first expense.
-              </span>
+              <p>No transactions yet<br></br>
+                Start by adding your first expense.</p>
+           
             </div>
 
           ) : (
 
-            expenses.map((expense, index) => (
+            filteredExpenses.map((expense, index) => (
 
               <div
                 key={index}
