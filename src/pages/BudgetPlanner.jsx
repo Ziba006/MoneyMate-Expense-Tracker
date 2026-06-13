@@ -2,9 +2,8 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useState, useEffect } from "react";
 import "./BudgetPlanner.css";
 
-
 function BudgetPlanner({ darkMode, setDarkMode }) {
-  
+
   const [monthlyBudget, setMonthlyBudget] = useState("");
   const [food, setFood] = useState("");
   const [transport, setTransport] = useState("");
@@ -14,95 +13,121 @@ function BudgetPlanner({ darkMode, setDarkMode }) {
   const [saveMessage, setSaveMessage] = useState("");
 
   const allocated =
-  Number(food) +
-  Number(transport) +
-  Number(entertainment) +
-  Number(education) +
-  Number(shopping);
+    Number(food) +
+    Number(transport) +
+    Number(entertainment) +
+    Number(education) +
+    Number(shopping);
 
-const remaining =
-  Number(monthlyBudget) - allocated;
+  const remaining =
+    Number(monthlyBudget) - allocated;
 
-  const isExceeded = allocated > Number(monthlyBudget);
+  const isExceeded =
+    allocated > Number(monthlyBudget);
 
   const clearBudget = () => {
-  setMonthlyBudget("");
 
-  setFood("");
-  setTransport("");
-  setEntertainment("");
-  setEducation("");
-  setShopping("");
+    setMonthlyBudget("");
 
-  localStorage.removeItem("budgetData");
-};
+    setFood("");
+    setTransport("");
+    setEntertainment("");
+    setEducation("");
+    setShopping("");
 
-const saveBudget = () => {
+    const currentUser =
+      localStorage.getItem(
+        "currentUser"
+      );
 
-  const budgetData = {
-    monthlyBudget,
-    food,
-    transport,
-    entertainment,
-    education,
-    shopping
+    localStorage.removeItem(
+      `${currentUser}_budget`
+    );
+
   };
 
-  localStorage.setItem(
-    "budgetData",
-    JSON.stringify(budgetData)
-  );
+  const saveBudget = () => {
 
-  setSaveMessage("✅ Budget Saved Successfully!");
-  setTimeout(() => {
-  setSaveMessage("");
-}, 1500);
+    const budgetData = {
+      monthlyBudget,
+      food,
+      transport,
+      entertainment,
+      education,
+      shopping
+    };
 
-};
+    const currentUser =
+      localStorage.getItem(
+        "currentUser"
+      );
 
-useEffect(() => {
-
-  const savedBudget =
-    localStorage.getItem("budgetData");
-
-  if(savedBudget){
-
-    const budgetData =
-      JSON.parse(savedBudget);
-
-    setMonthlyBudget(
-      budgetData.monthlyBudget || ""
+    localStorage.setItem(
+      `${currentUser}_budget`,
+      JSON.stringify(budgetData)
     );
 
-    setFood(
-      budgetData.food || ""
+    setSaveMessage(
+      "✅ Budget Saved Successfully!"
     );
 
-    setTransport(
-      budgetData.transport || ""
-    );
+    setTimeout(() => {
+      setSaveMessage("");
+    }, 1500);
 
-    setEntertainment(
-      budgetData.entertainment || ""
-    );
+  };
 
-    setEducation(
-      budgetData.education || ""
-    );
+  useEffect(() => {
 
-    setShopping(
-      budgetData.shopping || ""
-    );
+    const currentUser =
+      localStorage.getItem(
+        "currentUser"
+      );
 
-  }
+    const savedBudget =
+      localStorage.getItem(
+        `${currentUser}_budget`
+      );
 
-}, []);
+    if (savedBudget) {
+
+      const budgetData =
+        JSON.parse(savedBudget);
+
+      setMonthlyBudget(
+        budgetData.monthlyBudget || ""
+      );
+
+      setFood(
+        budgetData.food || ""
+      );
+
+      setTransport(
+        budgetData.transport || ""
+      );
+
+      setEntertainment(
+        budgetData.entertainment || ""
+      );
+
+      setEducation(
+        budgetData.education || ""
+      );
+
+      setShopping(
+        budgetData.shopping || ""
+      );
+
+    }
+
+  }, []);
 
   return (
     <DashboardLayout
       darkMode={darkMode}
       setDarkMode={setDarkMode}
     >
+
       <div className="budget-container">
 
         <div className="budget-header">
@@ -121,7 +146,11 @@ useEffect(() => {
             placeholder="Enter monthly budget"
             className="budget-input"
             value={monthlyBudget}
-            onChange={(e) => setMonthlyBudget(e.target.value)}
+            onChange={(e) =>
+              setMonthlyBudget(
+                e.target.value
+              )
+            }
           />
 
         </div>
@@ -135,14 +164,23 @@ useEffect(() => {
             placeholder="🍔 Food & Dining"
             className="budget-input"
             value={food}
-            onChange={(e) => setFood(e.target.value)}
+            onChange={(e) =>
+              setFood(
+                e.target.value
+              )
+            }
           />
 
           <input
             type="number"
             placeholder="🚕 Transportation"
-            className="budget-input"value={transport}
-            onChange={(e) => setTransport(e.target.value)}
+            className="budget-input"
+            value={transport}
+            onChange={(e) =>
+              setTransport(
+                e.target.value
+              )
+            }
           />
 
           <input
@@ -150,7 +188,11 @@ useEffect(() => {
             placeholder="🎬 Entertainment"
             className="budget-input"
             value={entertainment}
-          onChange={(e) => setEntertainment(e.target.value)}
+            onChange={(e) =>
+              setEntertainment(
+                e.target.value
+              )
+            }
           />
 
           <input
@@ -158,7 +200,11 @@ useEffect(() => {
             placeholder="📚 Education"
             className="budget-input"
             value={education}
-            onChange={(e) => setEducation(e.target.value)}
+            onChange={(e) =>
+              setEducation(
+                e.target.value
+              )
+            }
           />
 
           <input
@@ -166,7 +212,11 @@ useEffect(() => {
             placeholder="🛒 Shopping"
             className="budget-input"
             value={shopping}
-            onChange={(e) => setShopping(e.target.value)}
+            onChange={(e) =>
+              setShopping(
+                e.target.value
+              )
+            }
           />
 
         </div>
@@ -175,40 +225,51 @@ useEffect(() => {
 
           <h4>Budget Summary</h4>
 
-        <p>Allocated: ₹{allocated}</p>
+          <p>
+            Allocated: ₹{allocated}
+          </p>
 
-        <p> Remaining: ₹{remaining}</p>
+          <p>
+            Remaining: ₹{remaining}
+          </p>
 
-            {
-      isExceeded && (
-        <p className="warning-text">
-          ⚠️ Budget exceeded by ₹{allocated - Number(monthlyBudget)}
-        </p>
-      )
-}
+          {
+            isExceeded && (
+              <p className="warning-text">
+                ⚠️ Budget exceeded by ₹
+                {allocated -
+                  Number(monthlyBudget)}
+              </p>
+            )
+          }
 
         </div>
 
-            {
-      saveMessage && (
-        <div className="success-message">
-          {saveMessage}
-        </div>
-      )
-    }
+        {
+          saveMessage && (
+            <div className="success-message">
+              {saveMessage}
+            </div>
+          )
+        }
 
-        <button className="save-budget-btn" disabled={isExceeded}   onClick={saveBudget}>
+        <button
+          className="save-budget-btn"
+          disabled={isExceeded}
+          onClick={saveBudget}
+        >
           Save Budget
         </button>
 
         <button
-        className="clear-budget-btn"
-        onClick={clearBudget} 
-      >
-  Clear Budget
-</button>
+          className="clear-budget-btn"
+          onClick={clearBudget}
+        >
+          Clear Budget
+        </button>
 
       </div>
+
     </DashboardLayout>
   );
 }
